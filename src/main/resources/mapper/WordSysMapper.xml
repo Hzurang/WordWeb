@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.WordSysDao">
+    <resultMap id="WordSysMap" type="cn.hzu.englishweb.model.Word">
+        <id column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="wordEng" property="wordEng" jdbcType="VARCHAR"/>
+        <result column="wordChi" property="wordChi" jdbcType="VARCHAR"/>
+        <result column="wordEN" property="wordEN" jdbcType="VARCHAR"/>
+        <result column="wordEnPath" property="wordEnPath" jdbcType="VARCHAR"/>
+        <result column="wordUkPath" property="wordUkPath" jdbcType="VARCHAR"/>
+        <result column="wordPhotoPath" property="wordPhotoPath" jdbcType="VARCHAR"/>
+        <result column="wordSentence" property="wordSentence" jdbcType="VARCHAR"/>
+        <result column="wordStyle" property="wordStyle" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addWord" parameterType="cn.hzu.englishweb.model.Word">
+        insert into word_sys(wordEng, wordChi, wordEN, wordEnPath, wordUkPath, wordPhotoPath, wordSentence, wordStyle)
+        values (#{wordEng}, #{wordChi}, #{wordEN}, #{wordEnPath}, #{wordUkPath}, #{wordPhotoPath}, #{wordSentence}, #{wordStyle});
+    </insert>
+
+    <!--查看所有四级单词信息-->
+    <select id="queryAllCet4Word" resultMap="WordSysMap">
+        select * from word_sys where wordStyle = 0;
+    </select>
+
+    <!--查看所有六级单词信息-->
+    <select id="queryAllCet6Word" resultMap="WordSysMap">
+        select * from word_sys where wordStyle = 1;
+    </select>
+
+    <!--查看所有托福单词信息-->
+    <select id="queryAllTfWord" resultMap="WordSysMap">
+        select * from word_sys where wordStyle = 2;
+    </select>
+
+    <!--查看所有雅思单词信息-->
+    <select id="queryAllYsWord" resultMap="WordSysMap">
+        select * from word_sys where wordStyle = 3;
+    </select>
+
+    <!--查看所有单词信息-->
+    <select id="queryAllSysWord" resultMap="WordSysMap">
+        select * from word_sys
+    </select>
+
+    <!--根据ID查询一个单词-->
+    <select id="getWordById" parameterType="Integer" resultMap="WordSysMap">
+        select *
+        from word_sys
+        where wordId = #{wordId}
+    </select>
+</mapper>

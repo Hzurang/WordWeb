@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="../static/css/myindex.css" rel="stylesheet" th:href="@{/css/myindex.css}">
+    <title>听力详情</title>
+    <style>
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown > .dropdown-toggle:active {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="../static/svg/person-fill.svg" th:src="@{/svg/person-fill.svg}" width="25" height="25"
+                 class="d-inline-block align-top" alt="">
+            <a>[[${session.user.getUserName()}]]</a>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" type="button" aria-current="page" th:href="@{/main}">
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        学习
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/selectWord}">
+                            <img src="../static/svg/pen.svg" th:src="@{/svg/pen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;背单词
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewListen}">
+                            <img src="../static/svg/listen.svg" th:src="@{/svg/listen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;听听力
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewbook}">
+                            <img src="../static/svg/book.svg" th:src="@{/svg/book.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;看书籍
+                        </a>
+                        <a class="dropdown-item" th:href="@{/toCollection}">
+                            <img src="../static/svg/word.svg" th:src="@{/svg/word.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;单词本
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        单词测试
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" th:href="@{/testByChinese}">
+                            <img src="../static/svg/chi.svg" th:src="@{/svg/chi.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;英猜中
+                        </a>
+                        <a class="dropdown-item" th:href="@{/testByEnglish}">
+                            <img src="../static/svg/eng.svg" th:src="@{/svg/eng.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;中猜英
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        个人
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" th:href="@{/toUser}">
+                            <img src="../static/svg/modify.svg" th:src="@{/svg/modify.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;修改信息
+                        </a>
+                        <a class="dropdown-item" th:href="@{/user/logout}">
+                            <img src="../static/svg/logout.svg" th:src="@{/svg/logout.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;退出
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/toViewNotice}">
+                        历史公告
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div style="margin-left: 25%; margin-top: 3%" class="card w-50">
+    <div class="card-header">
+        <div class="row">
+            <div class="col" th:text="${listen.getListenName()}" style="margin-left:2px; margin-bottom:4px; font-size: 30px; color: #00aaaa"></div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <img id="audio_btn" src="../static/svg/word_sound.svg" th:src="@{/svg/word_sound.svg}" width="35"
+                     height="35" class="d-inline-block align-top" type="button"
+                     alt="">
+                <audio id="music" th:src="${listen.getListenPath()}"></audio>
+            </div>
+            <div class="col" style="font-size: 20px" th:text="${listen.getGradeLis()}">
+            </div>
+        </div>
+    </div>
+    <div class="card-body" th:utext="${listen.getContent()}">
+    </div>
+</div>
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    $("#audio_btn").click(function () {
+        var music = document.getElementById("music");
+        if (music.paused) {
+            music.play();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>鸭鸭背单词-找回密码</title>
+</head>
+<html>
+<head>
+    <title>产生n个不同随机数</title>
+</head>
+<button id="bt1" type="button" class="list-group-item list-group-item-action">A n.vt.摘录, 引用</button>
+<body>
+<script src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script>
+    $("#bt1").click(function () {
+        var str = $("#bt1").text()
+        console.log(str.slice(2))
+    })
+    //函数1 求指定范围内的一个随机数
+    function selectFrom(min,max)
+    {
+        var sum = max-min+1;
+        return Math.floor(Math.random()*sum+min);
+    }
+    //函数2 求指定范围内n个不重复的随机数
+    function myNum(n,min,max)
+    {
+        var a = [];
+        for(i=0;i<n;i++)
+        {
+            a[i]=selectFrom(min,max);
+            for(z=0;z<i;z++)
+            {
+                if(a[i]==a[z])
+                {
+                    i--;
+                    break;
+                }
+            }
+
+        }
+        return a;
+    }
+    var result = myNum(4,1,4);
+
+</script>
+</body>
+</html>

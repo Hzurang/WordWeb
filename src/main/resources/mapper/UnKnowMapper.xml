@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.UnKnowDao">
+    <resultMap id="WordUnKnowMap" type="cn.hzu.englishweb.model.WordUnKnow">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tableId" property="tableId" jdbcType="INTEGER"/>
+        <result column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="wordTime" property="wordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="addUnKnow" useGeneratedKeys="true" parameterType="cn.hzu.englishweb.model.WordUnKnow">
+        insert into word_unKnow(tableId, wordId, userId, wordTime)
+        values (#{tableId}, #{wordId}, #{userId}, #{wordTime});
+    </insert>
+
+    <select id="queryUnKnowByWordIdAndUserId" resultMap="WordUnKnowMap">
+        select * from word_unKnow where wordId=#{wordId} and userId=#{userId};
+    </select>
+</mapper>

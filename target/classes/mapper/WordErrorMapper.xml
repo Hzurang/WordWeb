@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.WordErrorDao">
+    <resultMap id="WordErrorMap" type="cn.hzu.englishweb.model.WordError">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tableId" property="tableId" jdbcType="INTEGER"/>
+        <result column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="error" property="error" jdbcType="INTEGER"/>
+        <result column="wordTime" property="wordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="addWordError" useGeneratedKeys="true" parameterType="cn.hzu.englishweb.model.WordError">
+        insert into word_error(tableId, wordId, userId, error, wordTime)
+        values (#{tableId}, #{wordId}, #{userId}, #{error}, #{wordTime});
+    </insert>
+
+    <select id="queryWordErrorByWordIdAndUserId" resultMap="WordErrorMap">
+        select * from word_error where wordId=#{wordId} and userId=#{userId};
+    </select>
+
+    <update id="updateWordError" parameterType="cn.hzu.englishweb.model.WordError" >
+        update word_error set error=#{error}
+        where wordId=#{wordId} and userId=#{userId};
+    </update>
+
+    <select id="queryMaxListErrorByUserId" resultMap="WordErrorMap">
+        select * from word_error where userId=#{userId} order by error desc limit 30;
+    </select>
+</mapper>

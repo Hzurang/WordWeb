@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.ProgressDao">
+    <resultMap id="ProgressMap" type="cn.hzu.englishweb.model.Progress">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tableId" property="tableId" jdbcType="INTEGER"/>
+        <result column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="wordTime" property="wordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryNewProgress" resultMap="ProgressMap">
+        SELECT *
+        FROM word_progress
+        where tableId = #{tableId} and userId = #{userId}
+        ORDER BY id DESC LIMIT 1;
+    </select>
+
+    <insert id="addProgress" useGeneratedKeys="true" parameterType="cn.hzu.englishweb.model.Progress">
+        insert into word_progress(tableId, wordId, userId, wordTime)
+        values (#{tableId}, #{wordId}, #{userId}, #{wordTime});
+    </insert>
+
+    <delete id="deleteCET4Progress" parameterType="Integer">
+        delete from word_progress where tableId=#{tableId} and userId=#{userId} and wordId between 1 and 5833;
+    </delete>
+</mapper>

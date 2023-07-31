@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.WordDao">
+    <resultMap id="WordMap" type="cn.hzu.englishweb.model.Word">
+        <id column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="wordEng" property="wordEng" jdbcType="VARCHAR"/>
+        <result column="wordChi" property="wordChi" jdbcType="VARCHAR"/>
+        <result column="wordEN" property="wordEN" jdbcType="VARCHAR"/>
+        <result column="wordEnPath" property="wordEnPath" jdbcType="VARCHAR"/>
+        <result column="wordUK" property="wordUK" jdbcType="VARCHAR"/>
+        <result column="wordUkPath" property="wordUkPath" jdbcType="VARCHAR"/>
+        <result column="wordPhotoPath" property="wordPhotoPath" jdbcType="VARCHAR"/>
+        <result column="wordSentence" property="wordSentence" jdbcType="VARCHAR"/>
+        <result column="wordStyle" property="wordStyle" jdbcType="INTEGER"/>
+    </resultMap>
+    <!--添加-->
+    <insert id="addWord" parameterType="cn.hzu.englishweb.model.Word">
+        insert into word(wordEng) values (#{wordEng});
+    </insert>
+
+    <!--查看所有听力信息-->
+    <select id="queryAllWord" resultMap="WordMap">
+        select * from word
+    </select>
+
+</mapper>

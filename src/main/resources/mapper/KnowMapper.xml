@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.KnowDao">
+    <resultMap id="WordKnowMap" type="cn.hzu.englishweb.model.WordKnow">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tableId" property="tableId" jdbcType="INTEGER"/>
+        <result column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="wordTime" property="wordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="addKnow" useGeneratedKeys="true" parameterType="cn.hzu.englishweb.model.WordKnow">
+        insert into word_Know(tableId, wordId, userId, wordTime)
+        values (#{tableId}, #{wordId}, #{userId}, #{wordTime});
+    </insert>
+
+    <select id="queryKnowByWordIdAndUserId" resultMap="WordKnowMap">
+        select * from word_Know where wordId=#{wordId} and userId=#{userId};
+    </select>
+
+    <select id="queryNewKnowById" resultMap="WordKnowMap">
+        select *
+        from word_Know
+        where id = (select MAX(id) from word_Know) and userId=#{userId};
+    </select>
+
+    <select id="queryKnowByIdAndUserId" resultMap="WordKnowMap">
+        select * from word_Know where id=#{id} and userId=#{userId};
+    </select>
+
+    <delete id="deleteKnow" parameterType="Integer">
+        delete from word_Know where wordId=#{wordId} and userId=#{userId};
+    </delete>
+</mapper>

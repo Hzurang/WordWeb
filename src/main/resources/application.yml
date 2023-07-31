@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: English_web
+
+  # MySQL 配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # MySQL驱动，无需修改
+    url: jdbc:mysql://localhost:3306/englishweb_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+
+  # Redis 配置
+  redis:
+    host: 127.0.0.1 # Redis地址，本地为127.0.0.1
+    port: 6379 # Redis端口号，默认为6379
+    password: # Redis密码，没有请保持为空
+    timeout: 60000
+    lettuce:
+      pool:
+        max-active: 8 # 最大连接数
+        max-idle: 8 # 最大空闲连接 默认8
+        min-idle: 0 # 最小空闲连接
+        max-wait: -1 # 最大连接阻塞等待时间 默认-1
+
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtualHost: /
+
+  resources:
+    static-locations: classpath:/static/  # 静态资源的配置位置，可以写成一个数组配置多个目录
+
+  mail:
+    host: smtp.qq.com
+    username: 2372047566@qq.com  # 邮箱地址
+    password: qfqpncniohkaebbb # 授权码
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enble: true
+            required: true
+
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
+
+  # 热重载
+  devtools:
+    restart:
+      enabled: true
+
+# mybatis 配置
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: cn.hzu.englishweb.model
+
+# pagehelper分页
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# sa-token 配置
+sa-token:
+  # token 名称
+  token-name: Hzuword
+  # token 有效期，此处为 7 天
+  timeout: 604800
+  activity-timeout: -1
+  # 允许同一账号并发登录
+  is-concurrent: false
+  is-share: false
+  token-style: uuid
+  is-log: false
+
+server:
+  servlet:
+    session:
+      timeout: 3600s

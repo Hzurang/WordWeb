@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../static/css/listen.css" rel="stylesheet" th:href="@{/css/listen.css}">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="../static/css/new.css" rel="stylesheet" th:href="@{/css/new.css}">
+    <title>听力列表</title>
+    <style>
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown > .dropdown-toggle:active {
+            pointer-events: none;
+        }
+
+        .table {
+            table-layout: fixed
+        }
+    </style>
+</head>
+<body style="background-color: #F3F3F3">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="../static/svg/person-fill.svg" th:src="@{/svg/person-fill.svg}" width="25" height="25"
+                 class="d-inline-block align-top" alt="">
+            <a>[[${session.user.getUserName()}]]</a>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/main}">
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        学习
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/selectWord}">
+                            <img src="../static/svg/pen.svg" th:src="@{/svg/pen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;背单词
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewListen}">
+                            <img src="../static/svg/listen.svg" th:src="@{/svg/listen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;听听力
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewbook}">
+                            <img src="../static/svg/book.svg" th:src="@{/svg/book.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;看书籍
+                        </a>
+                        <a class="dropdown-item" th:href="@{/toCollection}">
+                            <img src="../static/svg/word.svg" th:src="@{/svg/word.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;单词本
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        单词测试
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" th:href="@{/testByChinese}">
+                            <img src="../static/svg/chi.svg" th:src="@{/svg/chi.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;英猜中
+                        </a>
+                        <a class="dropdown-item" th:href="@{/testByEnglish}">
+                            <img src="../static/svg/eng.svg" th:src="@{/svg/eng.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;中猜英
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        个人
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" th:href="@{/toUser}">
+                            <img src="../static/svg/modify.svg" th:src="@{/svg/modify.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;修改信息
+                        </a>
+                        <a class="dropdown-item" th:href="@{/user/logout}">
+                            <img src="../static/svg/logout.svg" th:src="@{/svg/logout.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;退出
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/toViewNotice}">
+                        历史公告
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="content">
+        <div class="row">
+            <div class="col-8">
+                <div class="content-nav">
+                    <h1 class="content-title">听力学习</h1>
+                    <div class="content-nav-link">
+                        <a class="aa" title="首页" th:href="@{/main}">首页</a>&nbsp;&gt;&nbsp;
+                        <a class="aa" title="听力学习" th:href="@{/viewListen}">听力学习</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card" th:each="listen:${pageInfo.list}">
+                            <div class="row">
+                                <div id="div1" class="col-2"><a>[英语听力]</a></div>
+                                <a id="div2" type="button" style="text-decoration: none" class="col-9" th:text="${listen.listenName}" th:href="@{'/watchListen/'+${listen.listenId}}">有声美文：生活中的小惊喜，幸福可能并不复杂</a>
+                            </div>
+                            <div class="row">
+                                <div id="div3" type="button" th:text="${listen.description}">ssssssssssssss
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="div4" class="col-lg-3" th:text="${#dates.format(listen.createTime, 'yyyy-MM-dd hh-mm')}">2021-11-26 07:00</div>
+                                <div id="div5" class="col-lg-4" th:text="${listen.gradeLis}">双语阅读</div>
+                            </div>
+                        </div>
+                        <p class="text-center">
+                            当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span
+                                th:text="${pageInfo.pages}"></span> 页,共 <span
+                                th:text="${pageInfo.total}"></span> 条记录
+                        </p>
+                        <ul class="pagination1" style="padding-left: 32%">
+                            <li><a class="pagination1-a" th:href="@{/viewListen}">第一页</a> </li>
+                            <li><a class="pagination1-a" th:href="@{/viewListen(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a></li>
+                            <li><a class="pagination1-a" th:href="@{/viewListen(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></li>
+                            <li><a class="pagination1-a" th:href="@{/viewListen(pageNum=${pageInfo.pages})}">最后一页</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div id="card1" class="card">
+                    <div class="row">
+                        <div class="col-2" style="margin-top: 20px; margin-left: 20px">
+                            <img src="../static/svg/newListen.svg" th:src="@{/svg/newListen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                        </div>
+                        <div class="col" style="margin-top: 20px; margin-left: -20px; color: #0044cc;">最新听力</div>
+                    </div>
+                    <div th:each="listen:${listenList}">
+                        <a type="button" style="margin-left: 20px; margin-top: 10px; text-decoration: none" th:text="${listen.getListenName()}" th:href="@{'/watchListen/'+${listen.getListenId()}}">ssssssssss</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.WordRightDao">
+    <resultMap id="WordRightMap" type="cn.hzu.englishweb.model.WordRight">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tableId" property="tableId" jdbcType="INTEGER"/>
+        <result column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="rightNum" property="rightNum" jdbcType="INTEGER"/>
+        <result column="wordTime" property="wordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="addWordRight" useGeneratedKeys="true" parameterType="cn.hzu.englishweb.model.WordRight">
+        insert into word_right(tableId, wordId, userId, rightNum, wordTime)
+        values (#{tableId}, #{wordId}, #{userId}, #{rightNum}, #{wordTime});
+    </insert>
+
+    <select id="queryWordRightByWordIdAndUserId" resultMap="WordRightMap">
+        select * from word_right where wordId=#{wordId} and userId=#{userId};
+    </select>
+
+    <update id="updateWordRight" parameterType="cn.hzu.englishweb.model.WordRight" >
+        update word_right set rightNum=#{rightNum}
+        where wordId=#{wordId} and userId=#{userId};
+    </update>
+</mapper>

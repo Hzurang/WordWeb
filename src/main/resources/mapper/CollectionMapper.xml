@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.CollectionDao">
+    <resultMap id="CollectionMap" type="cn.hzu.englishweb.model.WordCollection">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="tableId" property="tableId" jdbcType="INTEGER"/>
+        <result column="wordId" property="wordId" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="wordTime" property="wordTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="addCollection" useGeneratedKeys="true" parameterType="cn.hzu.englishweb.model.WordCollection">
+        insert into word_collection(tableId, wordId, userId, wordTime)
+        values (#{tableId}, #{wordId}, #{userId}, #{wordTime});
+    </insert>
+
+    <delete id="deleteCollection" parameterType="Integer">
+        delete from word_collection where wordId=#{wordId} and userId=#{userId};
+    </delete>
+
+    <select id="queryCollectionByWordIdAndUserId" resultMap="CollectionMap">
+        select * from word_collection where wordId=#{wordId} and userId=#{userId};
+    </select>
+
+    <select id="queryCollectionByUserId" resultMap="CollectionMap">
+        select * from word_collection where userId=#{userId}
+    </select>
+</mapper>

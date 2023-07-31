@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="../static/css/myindex.css" rel="stylesheet" th:href="@{/css/myindex.css}">
+    <link href="../static/css/page.css" rel="stylesheet" th:href="@{/css/page.css}">
+    <title>书籍详情</title>
+    <style>
+        .dropdown:hover>.dropdown-menu {
+            display: block;
+        }
+        .dropdown>.dropdown-toggle:active {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="../static/svg/person-fill.svg" th:src="@{/svg/person-fill.svg}" width="25" height="25"
+                 class="d-inline-block align-top" alt="">
+            <a>[[${session.user.getUserName()}]]</a>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/main}">
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        学习
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/selectWord}">
+                            <img src="../static/svg/pen.svg" th:src="@{/svg/pen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;背单词
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewListen}">
+                            <img src="../static/svg/listen.svg" th:src="@{/svg/listen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;听听力
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewbook}">
+                            <img src="../static/svg/book.svg" th:src="@{/svg/book.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;看书籍
+                        </a>
+                        <a class="dropdown-item" th:href="@{/toCollection}">
+                            <img src="../static/svg/word.svg" th:src="@{/svg/word.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;单词本
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        单词测试
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" th:href="@{/testByChinese}">
+                            <img src="../static/svg/chi.svg" th:src="@{/svg/chi.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;英猜中
+                        </a>
+                        <a class="dropdown-item" th:href="@{/testByEnglish}">
+                            <img src="../static/svg/eng.svg" th:src="@{/svg/eng.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;中猜英
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        个人
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" th:href="@{/toUser}">
+                            <img src="../static/svg/modify.svg" th:src="@{/svg/modify.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;修改信息
+                        </a>
+                        <a class="dropdown-item" th:href="@{/user/logout}">
+                            <img src="../static/svg/logout.svg" th:src="@{/svg/logout.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;退出
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/toViewNotice}">
+                        历史公告
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="content-wrap">
+        <!--            左侧内容-->
+        <div class="left-content">
+            <div class="word-title text-center" th:text="${book.getBookName()}">
+                肖申克的救赎
+            </div>
+            <div class="content-box1">
+                <div class="details-title1">
+                    <div class="title-text" th:text="${book.getBookUser()}">作者：斯蒂芬·埃德温·金</div>
+                </div>
+                <div class="details-content">
+                    <div class="details-content-title-box">
+                        <div th:utext="${book.getContent()}">德弗瑞恩先生<br/>Mr. Dufresne, describe...<br/><br/><br/><br/>…描述一下你太太被谋杀当晚，你曾和她谈过些什么？<br/>...the
+                            confrontation you had with your wife the night she was
+                            murdered.<br/><br/><br/><br/>一些很糟糕的话<br/>It was very bitter.<br/><br/><br/><br/>她说她很高兴我已知道，她不想再偷偷摸摸了<br/>She
+                            said she was glad I knew, that she hated all the sneaking
+                            around.<br/><br/><br/><br/>她说她想离婚<br/>And she said that she wanted a divorce in
+                            Reno.<br/><br/><br/><br/>-你当时有什么反应？ -我对她说我不会在乎的<br/>- What was your response? - I told her I
+                            would not grant one.<br/><br/><br/><br/>“在我看见你在雷诺市前，下地狱吧！”<br/>"I'll see you in hell before
+                            I see you in Reno."<br/><br/><br/><br/>你的邻居曾听你说过这些话吧？<br/>Those were your words, according
+                            to your neighbors.<br/><br/><br/><br/>随他们怎么说<br/>If they say so.<br/><br/><br/><br/>我当时很不开心，什么都不记得了<br/>I
+                            really don't remember. I was upset.<br/><br/><br/><br/>你和太太争吵后发生了什么事？<br/>What happened
+                            after you argued with your wife?<br/><br/><br/><br/>她收拾好行李<br/>She packed a
+                            bag.<br/><br/><br/><br/>到昆汀先生家里去了<br/>She packed a bag to go and stay with Mr. Quentin.<br/><br/><br/><br/>格伦·昆汀，职业高尔夫教练<br/>Glenn
+                            Quentin, golf pro at the Snowden Hills Country Club...<br/><br/><br/><br/>你知道他是你妻子的情人<br/>...
+                            whom you had discovered was your wife's lover.<br/><br/><br/><br/>你跟踪她了吗？<br/>Did you follow
+                            her?<br/><br/><br/><br/>我先去了几间酒吧找<br/>I went to a few bars first.<br/><br/><br/><br/>接着，我开车去了昆汀家，但他们不在家里<br/>Later,
+                            I drove to his house to confront them. They weren't home.<br/><br/><br/><br/>我把车停在街角<br/>I
+                            parked in the turnout...<br/><br/><br/><br/>等在那里<br/>... and waited.<br/><br/><br/><br/>有何企图吗？<br/>With
+                            what intention?<br/><br/><br/><br/>我不太确定<br/>I'm not sure.<br/><br/><br/><br/>我非常困惑<br/>I
+                            was confused...<br/><br/><br/><br/>还有点醉<br/>... drunk.<br/><br/><br/><br/>我觉得<br/>I think...<br/><br/><br/><br/>我只是想吓一吓他们<br/>...
+                            mostly I wanted to scare them.<br/><br/><br/><br/>他们到家后，你就进屋杀了他们<br/>When they arrived, you
+                            went up to the house and murdered them.<br/><br/><br/><br/>没有，我控制了自己<br/>I was sobering
+                            up.<br/><br/><br/><br/>我开车回家睡觉来忘记一切<br/>I got back in the car and I drove home to sleep it
+                            off.<br/><br/><br/><br/>在回家的路上，我把枪扔进了河里<br/>Along the way, I threw my gun into the Royal
+                            River.<br/><br/><br/><br/>我很肯定这一点<br/>I've been very clear on this
+                            point.<br/><br/><br/><br/>但我感到奇怪的是，第二天早上清洁女工发现……<br/>I get hazy where the cleaning woman
+                            shows up the following morning...<br/><br/><br/><br/>你太太和她的情人死在床上<br/>...and finds your wife
+                            in bed with her lover...<br/><br/><br/><br/>致死的子弹是出自点38口径的手枪<br/>...riddled with.38-caliber
+                            bullets.<br/><br/><br/><br/>德福瑞恩先生，你和我一样都觉得那是巧合吗？<br/>Does that strike you as a fantastic
+                            coincidence, or is it just me?<br/><br/><br/><br/>确实是巧合<br/>Yes, it
+                            does.<br/><br/><br/><br/>你仍坚持说你在凶案发生前<br/>Yet you still maintain you threw your gun into the
+                            river...<br/><br/><br/><br/>已经把枪扔进河里了吗？<br/>...before the murders took place.<br/><br/><br/><br/>这对你很有利<br/>That's
+                            very convenient.<br/><br/><br/><br/>这是事实<br/>It's the truth.
+                        </div>
+                    </div>
+                </div>
+                <div id="select-box">
+                    <form action="/book/doRead">
+                        <input type="hidden" name="id" value="1">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-content">
+            <!-- 右侧公共部分 s-->
+            <div class="retrieve">
+                <div class="retrieve-title" style="width: 100%">最新书籍
+                    <a type="button" class="retrieve-more" style="text-decoration: none" th:href="@{/viewbook}">更多</a>
+                </div>
+                <div th:each="book:${bookList}">
+                    <div>
+                        <div class="word-title">书名</div>
+                        <div class="word-box" style="word-wrap: break-word;word-break: normal;"
+                             th:text="${book.getBookName()}">
+                            Action speak louder than words!
+                        </div>
+                    </div>
+                    <div>
+                        <div class="word-title">作者</div>
+                        <div class="word-box" style="word-wrap: break-word;word-break: normal;"
+                             th:text="${book.getBookUser()}">
+                            行动胜于言语
+                        </div>
+                    </div>
+                    <div>
+                        <a type="button" style="text-decoration: none" class="word-title" th:href="@{'/watchBook/'+${book.getBookId()}}">点击此处快速查看</a>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/main.js" th:src="@{../static/js/main.js}"></script>
+</body>
+</html>

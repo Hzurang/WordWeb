@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.BookDao">
+    <resultMap id="BookMap" type="cn.hzu.englishweb.model.Book">
+        <id column="bookId" property="bookId" jdbcType="INTEGER"/>
+        <result column="bookName" property="bookName" jdbcType="VARCHAR"/>
+        <result column="bookUser" property="bookUser" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查看所有书信息-->
+    <select id="queryAllBook" resultMap="BookMap">
+        select * from book
+    </select>
+    <!--查看最新的三本书信息-->
+    <select id="queryNewBook" resultMap="BookMap">
+        select * from book ORDER BY bookId DESC limit 3
+    </select>
+    <!--根据ID查询一条书-->
+    <select id="queryBookById" resultMap="BookMap">
+        select * from book where bookId=#{bookId}
+    </select>
+    <!--添加一本书-->
+    <insert id="addBook" parameterType="cn.hzu.englishweb.model.Book">
+        insert into book(bookName, bookUser,description,content) values (#{bookName},#{bookUser},#{description},#{content});
+    </insert>
+    <!--删除一本书-->
+    <delete id="deleteBook" parameterType="Integer">
+        delete from book where bookId=#{bookId}
+    </delete>
+    <!--修改一本书-->
+    <update id="updateBook" parameterType="cn.hzu.englishweb.model.Book" >
+        update book set bookName=#{bookName},bookUser=#{bookUser},description=#{description},content=#{content}
+        where bookId=#{bookId}
+    </update>
+
+
+</mapper>

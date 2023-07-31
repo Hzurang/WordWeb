@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../static/css/listen.css" rel="stylesheet" th:href="@{/css/listen.css}">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="../static/css/new.css" rel="stylesheet" th:href="@{/css/new.css}">
+    <title>单词详情</title>
+    <style>
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown > .dropdown-toggle:active {
+            pointer-events: none;
+        }
+
+        .table {
+            table-layout: fixed
+        }
+    </style>
+</head>
+<body style="background-color: #F3F3F3">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="../static/svg/person-fill.svg" th:src="@{/svg/person-fill.svg}" width="25" height="25"
+                 class="d-inline-block align-top" alt="">
+            <a>[[${session.user.getUserName()}]]</a>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/main}">
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        学习
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/selectWord}">
+                            <img src="../static/svg/pen.svg" th:src="@{/svg/pen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;背单词
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewListen}">
+                            <img src="../static/svg/listen.svg" th:src="@{/svg/listen.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;听听力
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewbook}">
+                            <img src="../static/svg/book.svg" th:src="@{/svg/book.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;看书籍
+                        </a>
+                        <a class="dropdown-item" th:href="@{/toCollection}">
+                            <img src="../static/svg/word.svg" th:src="@{/svg/word.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;单词本
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        单词测试
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" th:href="@{/testByChinese}">
+                            <img src="../static/svg/chi.svg" th:src="@{/svg/chi.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;英猜中
+                        </a>
+                        <a class="dropdown-item" th:href="@{/testByEnglish}">
+                            <img src="../static/svg/eng.svg" th:src="@{/svg/eng.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;中猜英
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        个人
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" th:href="@{/toUser}">
+                            <img src="../static/svg/modify.svg" th:src="@{/svg/modify.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;修改信息
+                        </a>
+                        <a class="dropdown-item" th:href="@{/user/logout}">
+                            <img src="../static/svg/logout.svg" th:src="@{/svg/logout.svg}" width="25" height="25"
+                                 class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;退出
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/toViewNotice}">
+                        历史公告
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="card" style="width: 80%; margin-top: 3%; margin-left: 10%">
+        <div class="row" style="margin-top: 2%">
+            <div id="word_name" class="col" style="font-size: 30px ; margin-left: 10%" th:text="${word.getWordEng()}">all out</div>
+            <div class="col">
+                <a style="font-size: 2px">美式</a>
+                <img id="audio_btn" src="../static/svg/word_sound.svg" th:src="@{/svg/word_sound.svg}" width="35"
+                     height="35"
+                     style="margin-left: 10px" class="d-inline-block align-top" type="button"
+                     alt="">
+                <audio id="music" th:src="${word.getWordUkPath()}"></audio>
+                <a style="font-size: 2px">英式</a>
+                <img id="audio_btn2" src="../static/svg/word_sound.svg" th:src="@{/svg/word_sound.svg}" width="35"
+                     height="35"
+                     style="margin-left: 10px" class="d-inline-block align-top" type="button"
+                     alt="">
+                <audio id="music2" th:src="${word.getWordEnPath()}"></audio>
+                <a class="btn btn-outline-success" type="button" style="margin-left: 4%" th:href="@{/main}">返回</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 2%">
+            <div class="col-1" style="margin-left: 5%">单词解释</div>
+            <div class="col-9 card">
+                <strong style="margin-top: 1%" th:text="${word.getWordChi()}">
+                    adj.(行动)竭尽全力的，全力以赴的
+                </strong>
+                <p style="color:green; margin-bottom: 1%" th:text="${word.getWordEN()}">英[ˌɔːl ˈaʊt] 美[ˌɔːl ˈaʊt]</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-1" style="margin-left: 5%">例句</div>
+            <div class="col-9 card">
+                <div style="margin-top: 1%; color: #00aaaa" th:utext="${word.getWordSentence()}">
+                    <p>1. The officers and crew prepared to abandon ship in an orderly fashion.</p>
+                    <p>全体船员秩序井然地准备弃船。</p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-bottom: 2%">
+            <div class="text-center">
+                <img id="photo" src="https://www.quword.com/images/words/abandon1.jpg"
+                     th:src="${word.getWordPhotoPath()}">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/study-word.js" th:src="@{/js/study-word.js}"></script>
+<script>
+    $("#audio_btn").click(function () {
+        var music = document.getElementById("music");
+        if (music.paused) {
+            music.play();
+        }
+    });
+    $("#audio_btn2").click(function () {
+        var music = document.getElementById("music2");
+        if (music.paused) {
+            music.play();
+        }
+    });
+</script>
+</body>
+</html>

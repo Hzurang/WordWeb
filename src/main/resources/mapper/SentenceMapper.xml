@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace：绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="cn.hzu.englishweb.dao.SentenceDao">
+    <resultMap id="sentenceMap" type="cn.hzu.englishweb.model.Sentence">
+        <id column="sentenceId" property="sentenceId" jdbcType="INTEGER"/>
+        <result column="sentencePath" property="sentencePath" jdbcType="VARCHAR"/>
+        <result column="sentenceName" property="sentenceName" jdbcType="VARCHAR"/>
+        <result column="sentenceNote" property="sentenceNote" jdbcType="VARCHAR"/>
+        <result column="sentenceDate" property="sentenceDate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--查看所有句子信息-->
+    <select id="queryAllSentence" resultMap="sentenceMap">
+        select *
+        from sentence
+    </select>
+    <!--根据ID查询一条句子-->
+    <select id="querySentenceById" parameterType="Integer" resultMap="sentenceMap">
+        select *
+        from sentence
+        where sentenceId = #{sentenceId}
+    </select>
+    <!--添加一条句子-->
+    <insert id="addSentence" useGeneratedKeys="true" keyColumn="sentenceId" keyProperty="sentenceId"
+            parameterType="cn.hzu.englishweb.model.Sentence">
+        insert into sentence (sentencePath, sentenceName, sentenceNote, sentenceDate)
+        values (#{sentencePath}, #{sentenceName}, #{sentenceNote}, #{sentenceDate});
+    </insert>
+    <!--删除一条句子-->
+    <delete id="deleteSentence" parameterType="Integer">
+        delete
+        from sentence
+        where sentenceId = #{sentenceId}
+    </delete>
+    <!--修改一条句子-->
+    <update id="updateSentence" parameterType="cn.hzu.englishweb.model.Sentence">
+        update sentence
+        set sentenceName=#{sentenceName},
+            sentenceNote=#{sentenceNote}
+        where sentenceId = #{sentenceId}
+    </update>
+    <!--随机查询一条句子-->
+    <select id="queryRandomSentence" resultMap="sentenceMap">
+        SELECT *
+        FROM sentence
+        ORDER BY RAND() limit 1
+    </select>
+    <!--根据日期找一条句子-->
+    <select id="queryTodaySentence" resultMap="sentenceMap">
+        SELECT *
+        FROM sentence
+        where sentenceDate = #{sentenceDate} limit 1
+    </select>
+</mapper>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="../static/css/myindex.css" rel="stylesheet" th:href="@{/css/myindex.css}">
+    <title>开始背单词吧</title>
+    <style>
+        .dropdown:hover>.dropdown-menu {
+            display: block;
+        }
+
+        .dropdown>.dropdown-toggle:active {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="../static/svg/person-fill.svg" th:src="@{/svg/person-fill.svg}" width="25" height="25" class="d-inline-block align-top" alt="">
+            <a>[[${session.user.getUserName()}]]</a>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" type="button" aria-current="page" th:href="@{/main}">
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        学习
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/selectWord}">
+                            <img src="../static/svg/pen.svg" th:src="@{/svg/pen.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;背单词
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewListen}">
+                            <img src="../static/svg/listen.svg" th:src="@{/svg/listen.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;听听力
+                        </a>
+                        <a class="dropdown-item" th:href="@{/viewbook}">
+                            <img src="../static/svg/book.svg" th:src="@{/svg/book.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;看书籍
+                        </a>
+                        <a class="dropdown-item" th:href="@{/toCollection}">
+                            <img src="../static/svg/word.svg" th:src="@{/svg/word.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;单词本
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        单词测试
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                        <a class="dropdown-item" th:href="@{/testByChinese}">
+                            <img src="../static/svg/chi.svg" th:src="@{/svg/chi.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;英猜中
+                        </a>
+                        <a class="dropdown-item" th:href="@{/testByEnglish}">
+                            <img src="../static/svg/eng.svg" th:src="@{/svg/eng.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;中猜英
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        个人
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a class="dropdown-item" th:href="@{/toUser}">
+                            <img src="../static/svg/modify.svg" th:src="@{/svg/modify.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;修改信息
+                        </a>
+                        <a class="dropdown-item" th:href="@{/user/logout}">
+                            <img src="../static/svg/logout.svg" th:src="@{/svg/logout.svg}" width="25" height="25" class="d-inline-block align-top"
+                                 alt="">
+                            &ensp;退出
+                        </a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" type="button" aria-current="page" th:href="@{/toViewNotice}">
+                        历史公告
+                    </a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="content-wrap">
+        <div class="left-content">
+            <div class="word-wrap">
+                <div>
+                    <div class="word-title text-center">欢迎
+                    </div>
+                    <div class="word-box"> &ensp;&ensp;&ensp;&ensp;欢迎使用鸭鸭背单词系统，该系统有背单词，听力练习，书籍阅读，单词收藏等功能。</div>
+                </div>
+                <div>
+                    <div class="word-title text-center" th:text="${notice.getTitle()}">欢迎您的到来，请您仔细阅读以下公告！
+                    </div>
+                    <div class="word-box" th:utext="${'&ensp;&ensp;&ensp;&ensp;'+notice.getContent()}"> &ensp;&ensp;&ensp;&ensp;该单词学习网站持续开放中，欢迎用户注册使用并推广。有问题请联系管理员，管理员邮箱2372047566@qq.com。
+                    </div>
+                </div>
+                <div>
+                    <div class="word-title text-center">高频错词
+                    </div>
+                    <div th:each="word:${list}">
+                        <a class="word" th:text="${word.wordEng}" th:href="@{'/toWatchWord/'+${word.wordId}}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-content">
+            <!-- 右侧公共部分 s-->
+            <div class="retrieve">
+                <div class="retrieve-title">每日一句
+                    <img src="../static/svg/sound.svg" th:src="@{/svg/sound.svg}" id="audio_btn" type="button" width="15" height="15">
+                    <a class="retrieve-more" style="text-decoration: none">语音播放</a>
+                    <audio id="music" th:src="${sentence.getSentencePath()}"></audio>
+                </div>
+                <div>
+                    <div class="word-title">英文</div>
+                    <div class="word-box" style="word-wrap: break-word;word-break: normal;"
+                         th:text="${sentence.getSentenceName()}">
+                        Action speak louder than words!
+                    </div>
+                </div>
+                <div>
+                    <div class="word-title">中文</div>
+                    <div class="word-box" style="word-wrap: break-word;word-break: normal;"
+                         th:text="${sentence.getSentenceNote()}">
+                        行动胜于言语
+                    </div>
+                </div>
+                <br>
+            </div>
+
+            <div class="retrieve">
+                <div class="retrieve-title">单词随机背
+                    <img src="../static/svg/random.svg" th:src="@{/svg/random.svg}" width="15" height="15">
+                    <a id="btn" class="retrieve-more" style="text-decoration: none">十秒刷新</a>
+                </div>
+                <div>
+                    <div class="word-title">英文</div>
+                    <div id="eng" class="word-box" style="word-wrap: break-word;word-break: normal;" th:text="${word.getWordEng()}">
+                        abandon
+                    </div>
+                </div>
+                <div>
+                    <div class="word-title">中文</div>
+                    <div id="chi" class="word-box" style="word-wrap: break-word;word-break: normal;" th:text="${word.getWordChi()}">
+                        n. 狂热；放任 vt. 遗弃；放弃
+                    </div>
+                </div>
+                <div>
+                    <div class="word-title">图片</div>
+                    <br>
+                    <img id="photo" style="margin-top: 10px" src="https://www.quword.com/images/words/abandon1.jpg" th:src="${word.getWordPhotoPath()}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+<script>
+    $("#audio_btn").click(function(){
+        var music = document.getElementById("music");
+        if(music.paused){
+            music.play();
+        }
+    });
+</script>
+</body>
+</html>
